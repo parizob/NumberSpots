@@ -159,18 +159,23 @@ class NumberSpots {
         this.statsBtn.addEventListener('click', () => this.showStatsModal());
         this.statsCloseBtn.addEventListener('click', () => this.hideStatsModal());
         
-        // Help tooltip toggle for mobile
+        // Help modal for mobile
         const helpBtn = document.getElementById('helpBtn');
-        const rulesTooltip = document.getElementById('rulesTooltip');
+        const helpModal = document.getElementById('helpModal');
+        const helpCloseBtn = document.getElementById('helpCloseBtn');
+        
         helpBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            rulesTooltip.classList.toggle('show');
+            helpModal.classList.add('show');
         });
         
-        // Close tooltip when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.help-wrapper')) {
-                rulesTooltip.classList.remove('show');
+        helpCloseBtn.addEventListener('click', () => {
+            helpModal.classList.remove('show');
+        });
+        
+        helpModal.addEventListener('click', (e) => {
+            if (e.target === helpModal) {
+                helpModal.classList.remove('show');
             }
         });
         
