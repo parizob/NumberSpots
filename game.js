@@ -129,8 +129,9 @@ class NumberSpots {
         // Custom keyboard clicks
         const keyboard = document.getElementById('keyboard');
         keyboard.addEventListener('click', (e) => {
+            e.preventDefault();
             const key = e.target.closest('.key');
-            if (key) {
+            if (key && key.dataset.key) {
                 this.handleKeyPress(key.dataset.key);
             }
         });
@@ -164,9 +165,6 @@ class NumberSpots {
                 }
             }
         });
-        
-        // New game button
-        this.newGameBtn.addEventListener('click', () => this.handleNewGameClick());
         
         this.modalBtn.addEventListener('click', () => {
             this.hideModal();
@@ -234,6 +232,11 @@ class NumberSpots {
     }
     
     handleKeyPress(key) {
+        if (key === 'NewGame') {
+            this.handleNewGameClick();
+            return;
+        }
+        
         if (this.gameOver || this.isRevealing) return;
         
         if (key === 'Enter') {

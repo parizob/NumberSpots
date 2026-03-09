@@ -107,10 +107,9 @@
                 <button class="key key-num" data-key="8">8</button>
                 <button class="key key-num" data-key="9">9</button>
                 <button class="key key-num" data-key="0">0</button>
+                <button class="key key-new" id="newGameBtn" data-key="NewGame">↻</button>
             </div>
         </div>
-
-        <button class="new-game-btn" id="newGameBtn">NEW GAME</button>
     </div>
 
     <!-- Help Modal (Mobile) -->
@@ -155,15 +154,15 @@
             <h2>Statistics</h2>
             <div class="stats-numbers">
                 <div class="stat-box">
-                    <span class="stat-value" id="statPlayed">0</span>
+                    <span class="stat-value" id="StatPlayed">0</span>
                     <span class="stat-label">Played</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-value" id="statWinPct">0</span>
+                    <span class="stat-value" id="StatWinPct">0</span>
                     <span class="stat-label">Win %</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-value" id="statStreak">0</span>
+                    <span class="stat-value" id="StatStreak">0</span>
                     <span class="stat-label">Streak</span>
                 </div>
             </div>
@@ -171,39 +170,39 @@
                 <div class="graph-bars">
                     <div class="bar-row" data-guess="1">
                         <span class="bar-label">1</span>
-                        <div class="bar-track"><div class="bar-fill" id="bar1"></div></div>
-                        <span class="bar-count" id="count1">0</span>
+                        <div class="bar-track"><div class="bar-fill" id="Bar1"></div></div>
+                        <span class="bar-count" id="Count1">0</span>
                     </div>
                     <div class="bar-row" data-guess="2">
                         <span class="bar-label">2</span>
-                        <div class="bar-track"><div class="bar-fill" id="bar2"></div></div>
-                        <span class="bar-count" id="count2">0</span>
+                        <div class="bar-track"><div class="bar-fill" id="Bar2"></div></div>
+                        <span class="bar-count" id="Count2">0</span>
                     </div>
                     <div class="bar-row" data-guess="3">
                         <span class="bar-label">3</span>
-                        <div class="bar-track"><div class="bar-fill" id="bar3"></div></div>
-                        <span class="bar-count" id="count3">0</span>
+                        <div class="bar-track"><div class="bar-fill" id="Bar3"></div></div>
+                        <span class="bar-count" id="Count3">0</span>
                     </div>
                     <div class="bar-row" data-guess="4">
                         <span class="bar-label">4</span>
-                        <div class="bar-track"><div class="bar-fill" id="bar4"></div></div>
-                        <span class="bar-count" id="count4">0</span>
+                        <div class="bar-track"><div class="bar-fill" id="Bar4"></div></div>
+                        <span class="bar-count" id="Count4">0</span>
                     </div>
                     <div class="bar-row" data-guess="5">
                         <span class="bar-label">5</span>
-                        <div class="bar-track"><div class="bar-fill" id="bar5"></div></div>
-                        <span class="bar-count" id="count5">0</span>
+                        <div class="bar-track"><div class="bar-fill" id="Bar5"></div></div>
+                        <span class="bar-count" id="Count5">0</span>
                     </div>
                     <div class="bar-row" data-guess="6">
                         <span class="bar-label">6</span>
-                        <div class="bar-track"><div class="bar-fill" id="bar6"></div></div>
-                        <span class="bar-count" id="count6">0</span>
+                        <div class="bar-track"><div class="bar-fill" id="Bar6"></div></div>
+                        <span class="bar-count" id="Count6">0</span>
                     </div>
                 </div>
                 <div class="fail-row" id="failRow">
                     <span class="fail-icon">✕</span>
                     <span class="fail-label">Failed</span>
-                    <span class="fail-count" id="failCount">0</span>
+                    <span class="fail-count" id="FailCount">0</span>
                 </div>
             </div>
             <button class="modal-btn modal-close-btn" id="statsCloseBtn">CLOSE</button>

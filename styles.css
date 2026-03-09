@@ -32,21 +32,22 @@
 html {
     height: 100%;
     background: var(--bg-dark);
-    /* Prevent zoom on input focus on iOS */
     -webkit-text-size-adjust: 100%;
     touch-action: manipulation;
+    overflow: hidden;
 }
 
 body {
     font-family: 'JetBrains Mono', monospace;
     background: var(--bg-dark);
-    min-height: 100%;
-    min-height: 100dvh;
+    height: 100%;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12px;
+    padding: 8px;
     margin: 0;
+    overflow: hidden;
     background-color: var(--bg-dark);
     background-image: 
         radial-gradient(ellipse at top, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
@@ -58,13 +59,17 @@ body {
 .game-container {
     width: 100%;
     max-width: 320px;
+    max-height: 100%;
     background: linear-gradient(145deg, var(--bg-card) 0%, #0e0e16 100%);
     border-radius: 20px;
-    padding: 20px 18px;
+    padding: 16px 14px;
     border: 1px solid var(--border-subtle);
     box-shadow: 
         0 25px 50px -12px rgba(0, 0, 0, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .game-header {
@@ -450,10 +455,10 @@ body {
 /* Game Message */
 .game-message {
     text-align: center;
-    min-height: 16px;
+    min-height: 14px;
     color: var(--text-secondary);
-    font-size: 0.75rem;
-    margin-bottom: 10px;
+    font-size: 0.7rem;
+    margin-bottom: 6px;
 }
 
 .game-message.error {
@@ -469,7 +474,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 12px;
     width: 100%;
 }
 
@@ -544,29 +548,23 @@ body {
     transform: scale(0.95);
 }
 
-/* New Game Button */
-.new-game-btn {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+.key-new {
+    width: 36px;
+    background: transparent;
+    color: var(--lower);
+    font-size: 1.5rem;
     border: none;
-    border-radius: 8px;
-    color: white;
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px var(--accent-glow);
+    text-shadow: 0 0 10px var(--lower-glow);
 }
 
-.new-game-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px var(--accent-glow);
+.key-new:hover {
+    transform: rotate(180deg);
+    color: #ff6b6b;
+    text-shadow: 0 0 15px var(--lower-glow);
 }
 
-.new-game-btn:active {
-    transform: translateY(0);
+.key-new:active {
+    transform: scale(0.95);
 }
 
 /* Modal */
@@ -895,10 +893,35 @@ body {
     margin-bottom: 16px;
 }
 
-/* Responsive for very small screens */
-@media (max-height: 600px) {
+/* Responsive for small screens */
+@media (max-height: 700px) {
     .game-container {
-        padding: 16px 14px;
+        padding: 12px 12px;
+        border-radius: 16px;
+    }
+    
+    .game-header {
+        margin-bottom: 8px;
+    }
+    
+    .title-letter {
+        font-size: 0.95rem;
+        padding: 2px 4px;
+    }
+    
+    .game-title {
+        gap: 3px;
+        margin-bottom: 4px;
+    }
+    
+    .game-subtitle {
+        font-size: 0.6rem;
+        margin-bottom: 4px;
+    }
+    
+    .game-hint {
+        font-size: 0.6rem;
+        padding: 0 5px;
     }
     
     .cell {
@@ -911,26 +934,103 @@ body {
         font-size: 1.2rem;
     }
     
-    .title-letter {
-        font-size: 1rem;
-        padding: 2px 4px;
+    .indicator-above {
+        font-size: 0.6rem;
     }
     
-    .game-header {
-        margin-bottom: 10px;
+    .indicator-below {
+        font-size: 0.7rem;
     }
     
     .game-board {
         gap: 4px;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
     
     .guess-row {
         gap: 4px;
     }
     
-    .game-hint {
-        font-size: 0.6rem;
+    .game-message {
+        min-height: 14px;
+        font-size: 0.65rem;
+        margin-bottom: 6px;
+    }
+    
+    .keyboard {
+        gap: 4px;
+    }
+    
+    .keyboard-row {
+        gap: 4px;
+    }
+    
+    .key {
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .key-num {
+        width: 32px;
+    }
+    
+    .key-enter {
+        width: 48px;
+        font-size: 0.5rem;
+    }
+    
+    .key-back {
+        width: 48px;
+        font-size: 1.1rem;
+    }
+    
+    .key-new {
+        width: 32px;
+        font-size: 1.3rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-height: 580px) {
+    .game-container {
+        padding: 10px 10px;
+    }
+    
+    .title-letter {
+        font-size: 0.85rem;
+        padding: 1px 3px;
+    }
+    
+    .cell {
+        width: 44px;
+        height: 48px;
+    }
+    
+    .cell-input,
+    .cell-back .back-number {
+        font-size: 1.1rem;
+    }
+    
+    .key {
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .key-num {
+        width: 28px;
+    }
+    
+    .key-enter {
+        width: 44px;
+    }
+    
+    .key-back {
+        width: 44px;
+    }
+    
+    .key-new {
+        width: 28px;
+        font-size: 1.1rem;
     }
 }
 
