@@ -159,6 +159,21 @@ class NumberSpots {
         this.statsBtn.addEventListener('click', () => this.showStatsModal());
         this.statsCloseBtn.addEventListener('click', () => this.hideStatsModal());
         
+        // Help tooltip toggle for mobile
+        const helpBtn = document.getElementById('helpBtn');
+        const rulesTooltip = document.getElementById('rulesTooltip');
+        helpBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            rulesTooltip.classList.toggle('show');
+        });
+        
+        // Close tooltip when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.help-wrapper')) {
+                rulesTooltip.classList.remove('show');
+            }
+        });
+        
         // Confirm modal
         this.confirmCancelBtn.addEventListener('click', () => this.hideConfirmModal());
         this.confirmYesBtn.addEventListener('click', () => {

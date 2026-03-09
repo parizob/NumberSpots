@@ -32,6 +32,9 @@
 html {
     height: 100%;
     background: var(--bg-dark);
+    /* Prevent zoom on input focus on iOS */
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
 }
 
 body {
@@ -109,7 +112,7 @@ body {
     color: var(--wrong-spot);
 }
 
-/* Rules Tooltip - opens to the RIGHT */
+/* Rules Tooltip - opens to the RIGHT on desktop */
 .rules-tooltip {
     position: absolute;
     top: -10px;
@@ -127,10 +130,27 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-.help-wrapper:hover .rules-tooltip {
+.help-wrapper:hover .rules-tooltip,
+.rules-tooltip.show {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
+}
+
+/* Mobile tooltip - centered over the board */
+@media (max-width: 500px) {
+    .rules-tooltip {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        width: 220px;
+    }
+    
+    .help-wrapper:hover .rules-tooltip,
+    .rules-tooltip.show {
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 .rules-title {
@@ -314,9 +334,12 @@ body {
     outline: none;
     text-align: center;
     font-family: 'Archivo Black', sans-serif;
-    font-size: 1.4rem;
+    font-size: 16px; /* Minimum 16px prevents iOS zoom */
     color: var(--text-primary);
     caret-color: var(--focus);
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    touch-action: manipulation;
 }
 
 .cell-input:disabled {
