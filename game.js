@@ -213,6 +213,9 @@ class NumberSpots {
             if (nextInput) {
                 nextInput.focus();
             }
+        } else {
+            // Last digit entered - auto submit
+            setTimeout(() => this.submitGuess(), 100);
         }
     }
     
