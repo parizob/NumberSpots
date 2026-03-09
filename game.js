@@ -126,26 +126,44 @@ class NumberSpots {
     }
     
     initEventListeners() {
-        // Handle input on cells
-        this.gameBoard.addEventListener('input', (e) => {
-            if (e.target.classList.contains('cell-input')) {
-                this.handleInput(e.target);
+        // Custom keyboard clicks
+        const keyboard = document.getElementById('keyboard');
+        keyboard.addEventListener('click', (e) => {
+            const key = e.target.closest('.key');
+            if (key) {
+                this.handleKeyPress(key.dataset.key);
             }
         });
         
-        // Handle keydown for navigation
-        this.gameBoard.addEventListener('keydown', (e) => {
-            if (e.target.classList.contains('cell-input')) {
-                this.handleKeydown(e);
+        // Physical keyboard for desktop
+        document.addEventListener('keydown', (e) => {
+            // Ignore if modal is open or typing in another input
+            if (document.querySelector('.modal.show')) return;
+            
+            if (e.key >= '0' && e.key <= '9') {
+                e.preventDefault();
+                this.handleKeyPress(e.key);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                this.handleKeyPress('Enter');
+            } else if (e.key === 'Backspace') {
+                e.preventDefault();
+                this.handleKeyPress('Backspace');
             }
         });
         
-        // Handle focus
-        this.gameBoard.addEventListener('focus', (e) => {
-            if (e.target.classList.contains('cell-input')) {
-                this.handleFocus(e.target);
+        // Click on cell to set cursor position
+        this.gameBoard.addEventListener('click', (e) => {
+            const cell = e.target.closest('.cell');
+            if (cell && !this.gameOver && !this.isRevealing) {
+                const row = parseInt(cell.dataset.row);
+                const col = parseInt(cell.dataset.col);
+                if (row === this.currentRow) {
+                    this.currentCol = col;
+                    this.updateCellStates();
+                }
             }
-        }, true);
+        });
         
         // New game button
         this.newGameBtn.addEventListener('click', () => this.handleNewGameClick());
@@ -215,66 +233,49 @@ class NumberSpots {
         }
     }
     
-    handleInput(input) {
-        const value = input.value;
+    handleKeyPress(key) {
+        if (this.gameOver || this.isRevealing) return;
         
-        if (!/^\d$/.test(value)) {
-            input.value = '';
-            return;
-        }
-        
-        const col = parseInt(input.dataset.col);
-        const cell = input.closest('.cell');
-        cell.classList.add('pulse');
-        setTimeout(() => cell.classList.remove('pulse'), 300);
-        
-        if (col < 3) {
-            const nextInput = this.getInput(this.currentRow, col + 1);
-            if (nextInput) {
-                nextInput.focus();
-            }
-        } else {
-            // Last digit entered - auto submit
-            setTimeout(() => this.submitGuess(), 100);
-        }
-    }
-    
-    handleKeydown(e) {
-        const input = e.target;
-        const row = parseInt(input.dataset.row);
-        const col = parseInt(input.dataset.col);
-        
-        if (e.key === 'Enter') {
-            e.preventDefault();
+        if (key === 'Enter') {
             this.submitGuess();
             return;
         }
         
-        if (e.key === 'Backspace') {
-            if (!input.value && col > 0) {
-                const prevInput = this.getInput(row, col - 1);
+        if (key === 'Backspace') {
+            const input = this.getInput(this.currentRow, this.currentCol);
+            if (input && input.value) {
+                input.value = '';
+            } else if (this.currentCol > 0) {
+                this.currentCol--;
+                const prevInput = this.getInput(this.currentRow, this.currentCol);
                 if (prevInput) {
-                    prevInput.focus();
                     prevInput.value = '';
                 }
             }
+            this.updateCellStates();
             return;
         }
         
-        if (e.key === 'ArrowLeft' && col > 0) {
-            e.preventDefault();
-            this.getInput(row, col - 1)?.focus();
+        // Number key
+        if (key >= '0' && key <= '9') {
+            const input = this.getInput(this.currentRow, this.currentCol);
+            if (input) {
+                input.value = key;
+                
+                // Pulse animation
+                const cell = this.getCell(this.currentRow, this.currentCol);
+                if (cell) {
+                    cell.classList.add('pulse');
+                    setTimeout(() => cell.classList.remove('pulse'), 300);
+                }
+                
+                // Move to next cell (but don't auto-submit)
+                if (this.currentCol < 3) {
+                    this.currentCol++;
+                }
+                this.updateCellStates();
+            }
         }
-        if (e.key === 'ArrowRight' && col < 3) {
-            e.preventDefault();
-            this.getInput(row, col + 1)?.focus();
-        }
-    }
-    
-    handleFocus(input) {
-        const col = parseInt(input.dataset.col);
-        this.currentCol = col;
-        this.updateCellStates();
     }
     
     updateCellStates() {
@@ -319,13 +320,7 @@ class NumberSpots {
         this.gameMessage.textContent = '';
         this.gameMessage.className = 'game-message';
         
-        setTimeout(() => {
-            const firstInput = this.getInput(0, 0);
-            if (firstInput) {
-                firstInput.focus();
-                this.updateCellStates();
-            }
-        }, 100);
+        this.updateCellStates();
     }
     
     getGuess() {
@@ -451,12 +446,8 @@ class NumberSpots {
                     if (input) input.disabled = false;
                 }
                 
-                const firstInput = this.getInput(this.currentRow, 0);
-                if (firstInput) {
-                    firstInput.focus();
-                    this.currentCol = 0;
-                    this.updateCellStates();
-                }
+                this.currentCol = 0;
+                this.updateCellStates();
                 
                 this.showMessage(`${this.maxRows - this.currentRow} guesses remaining`, '');
             }
