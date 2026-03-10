@@ -187,13 +187,21 @@ class NumberSpots {
         
         helpCloseBtn.addEventListener('click', () => {
             helpModal.classList.remove('show');
+            // Mark that user has seen the help
+            localStorage.setItem('numberSpotsHelpSeen', 'true');
         });
         
         helpModal.addEventListener('click', (e) => {
             if (e.target === helpModal) {
                 helpModal.classList.remove('show');
+                localStorage.setItem('numberSpotsHelpSeen', 'true');
             }
         });
+        
+        // Show help modal on first visit
+        if (!localStorage.getItem('numberSpotsHelpSeen')) {
+            helpModal.classList.add('show');
+        }
         
         // Confirm modal
         this.confirmCancelBtn.addEventListener('click', () => this.hideConfirmModal());
