@@ -136,6 +136,11 @@ class NumberSpots {
             }
         });
         
+        // Refresh/New Game button
+        this.newGameBtn.addEventListener('click', () => {
+            this.handleNewGameClick();
+        });
+        
         // Physical keyboard for desktop
         document.addEventListener('keydown', (e) => {
             // Ignore if modal is open or typing in another input

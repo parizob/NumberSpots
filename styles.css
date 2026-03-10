@@ -96,11 +96,20 @@ body {
     color: var(--accent);
 }
 
-/* Help Button wrapper - right side */
-.help-wrapper {
+/* Header right side container */
+.header-right {
     position: absolute;
     top: 0;
     right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Help Button wrapper */
+.help-wrapper {
+    position: relative;
 }
 
 .help-btn {
@@ -115,6 +124,24 @@ body {
 
 .help-btn:hover {
     color: var(--wrong-spot);
+}
+
+/* Refresh button */
+.refresh-btn {
+    background: transparent;
+    border: none;
+    color: var(--lower);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 8px var(--lower-glow);
+}
+
+.refresh-btn:hover {
+    transform: rotate(180deg);
+    color: #ff6b6b;
+    text-shadow: 0 0 12px var(--lower-glow);
 }
 
 /* Rules Tooltip - opens to the RIGHT on desktop */
@@ -568,27 +595,6 @@ body {
     transform: scale(0.95);
 }
 
-.key-new {
-    position: absolute;
-    right: 0;
-    width: 52px;
-    background: transparent;
-    color: var(--lower);
-    font-size: 1.8rem;
-    border: none;
-    text-shadow: 0 0 10px var(--lower-glow);
-}
-
-.key-new:hover {
-    transform: rotate(180deg);
-    color: #ff6b6b;
-    text-shadow: 0 0 15px var(--lower-glow);
-}
-
-.key-new:active {
-    transform: scale(0.95);
-}
-
 /* Modal */
 .modal {
     position: fixed;
@@ -1011,10 +1017,6 @@ body {
         font-size: 1.2rem;
     }
     
-    .key-new {
-        width: 40px;
-        font-size: 1.4rem;
-    }
 }
 
 /* Extra small screens */
@@ -1103,9 +1105,12 @@ body {
         font-size: 1rem;
     }
     
-    .key-new {
-        width: 30px;
-        font-size: 1.1rem;
+    .refresh-btn {
+        font-size: 1rem;
+    }
+    
+    .header-right {
+        gap: 4px;
     }
 }
 
@@ -1210,15 +1215,18 @@ body {
         font-size: 0.9rem;
     }
     
-    .key-new {
-        width: 26px;
-        font-size: 1rem;
-    }
-    
     .stats-btn, .help-btn {
         width: 20px;
         height: 20px;
         font-size: 0.7rem;
+    }
+    
+    .refresh-btn {
+        font-size: 0.9rem;
+    }
+    
+    .header-right {
+        gap: 3px;
     }
 }
 
