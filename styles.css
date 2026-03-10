@@ -484,6 +484,17 @@ body {
     gap: 8px;
 }
 
+.keyboard-row.second-row {
+    justify-content: center;
+    position: relative;
+}
+
+.keyboard-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
 .key {
     height: 58px;
     border: none;
@@ -550,6 +561,8 @@ body {
 }
 
 .key-new {
+    position: absolute;
+    right: 0;
     width: 52px;
     background: transparent;
     color: var(--lower);
@@ -967,6 +980,10 @@ body {
         gap: 5px;
     }
     
+    .keyboard-numbers {
+        gap: 5px;
+    }
+    
     .key {
         height: 44px;
         font-size: 1.15rem;
@@ -1012,6 +1029,10 @@ body {
     .cell-input,
     .cell-back .back-number {
         font-size: 1.3rem;
+    }
+    
+    .keyboard-numbers {
+        gap: 4px;
     }
     
     .key {
